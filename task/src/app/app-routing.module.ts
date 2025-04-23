@@ -27,6 +27,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'user-list', component: UserListComponent },
     ],
+    data: { role: "ADMIN" },
   },
   
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirect to login by default
