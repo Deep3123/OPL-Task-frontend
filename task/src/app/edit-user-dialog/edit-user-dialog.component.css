@@ -1,0 +1,130 @@
+/* Ensure the form takes full height and is scrollable if needed */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  max-height: 70vh; /* Add max height to ensure dialog doesn't overflow */
+  overflow-y: auto; /* Enable scrolling if content exceeds max height */
+  flex-grow: 1; /* Allow form to grow and fill available space */
+}
+
+/* Ensure the title has a more structured, cleaner look */
+.mat-dialog-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  padding: 12px 0;
+  border-bottom: 3px solid #28a745;
+  background-color: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Add some padding to make the dialog more visually appealing */
+.mat-dialog-content {
+  padding: 20px;
+  background-color: #fff;
+}
+
+/* Add some spacing between the form fields for better readability */
+.mat-form-field {
+  margin-bottom: 16px;
+}
+
+/* Style the form fields (inputs, selects) for better readability and alignment */
+.mat-form-field input,
+.mat-form-field textarea,
+.mat-form-field mat-select {
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+/* Make the form fields' labels more visually prominent */
+.mat-form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Add more spacing around the action buttons */
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Style the cancel and update buttons */
+.dialog-actions button {
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Make sure the Cancel button has a neutral color */
+.dialog-actions button[mat-dialog-close] {
+  background-color: #e9ecef;
+  color: #495057;
+  border: none;
+}
+
+.dialog-actions button[mat-dialog-close]:hover {
+  background-color: #d6d8db;
+}
+
+/* Style the Update button to highlight it */
+.dialog-actions button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+.dialog-actions button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+/* For readonly inputs (username and password) ensure they are visually clear */
+.mat-form-field input[readonly] {
+  background-color: #f1f1f1;
+  color: #6c757d;
+}
+
+/* Add a subtle border color when readonly inputs are focused */
+.mat-form-field input[readonly]:focus {
+  outline: none;
+  border-color: #ced4da;
+}
+
+/* Add hover effect for action buttons for better accessibility */
+.dialog-actions button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+/* Make the dialog content more responsive */
+@media (max-width: 600px) {
+  .mat-dialog-title {
+    font-size: 20px;
+  }
+
+  .edit-form {
+    padding: 10px;
+  }
+
+  .dialog-actions {
+    gap: 8px;
+  }
+
+  .dialog-actions button {
+    padding: 8px 16px;
+  }
+}

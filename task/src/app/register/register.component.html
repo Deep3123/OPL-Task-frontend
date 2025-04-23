@@ -1,0 +1,151 @@
+<section class="vh-100">
+    <div class="container-fluid h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <!-- Left side Image -->
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="registration.jpg" class="img-fluid" alt="JetWayz Registration Banner">
+            </div>
+
+            <!-- Registration Form -->
+            <div class="col-md-8 col-lg-6 col-xl-5 mt-4" style="justify-items: center;">
+                <div class="register-container">
+                    <div class="register-header">
+                        <h2>Create an Account</h2>
+                        <p>Experience hassle-free experience with us !</p>
+                        <div class="orange-accent"></div>
+                    </div>
+
+                    <form #registrationForm="ngForm" (ngSubmit)="onRegisterSubmit(registrationForm)"
+                        enctype="multipart/form-data">
+                        <!-- Full Name input -->
+                        <div class="form-group">
+                            <label for="name">Full Name:</label>
+                            <input type="text" id="name" class="form-control" name="name" ngModel required minlength="2"
+                                #name="ngModel" placeholder="Enter your full name">
+                            <div *ngIf="name.invalid && name.touched" class="error-message">
+                                <div *ngIf="name.errors?.['required']">Name is required.</div>
+                                <div *ngIf="name.errors?.['minlength']">Name must be at least 2 characters long.</div>
+                            </div>
+                        </div>
+
+                        <!-- Email input -->
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" class="form-control" name="email" ngModel required email
+                                #email="ngModel" placeholder="Enter your email address">
+                            <div *ngIf="email.invalid && email.touched" class="error-message">
+                                <div *ngIf="email.errors?.['required']">Email is required.</div>
+                                <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+                            </div>
+                        </div>
+
+                        <!-- Username input -->
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" class="form-control" name="username" ngModel required
+                                pattern="^[a-zA-Z0-9_]+$" minlength="4" maxlength="15" #username="ngModel"
+                                placeholder="Choose a username">
+                            <div *ngIf="username.invalid && username.touched" class="error-message">
+                                <div *ngIf="username.errors?.['required']">Username is required.</div>
+                                <div *ngIf="username.errors?.['pattern']">Username can only contain alphanumeric
+                                    characters.</div>
+                                <div *ngIf="username.errors?.['minlength']">Username must be at least 4 characters long.
+                                </div>
+                                <div *ngIf="username.errors?.['maxlength']">Username cannot be more than 15 characters.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" class="form-control" name="password" ngModel required
+                                minlength="8"
+                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                                #password="ngModel" placeholder="Create a password">
+                            <div *ngIf="password.invalid && password.touched" class="error-message">
+                                <div *ngIf="password.errors?.['required']">Password is required.</div>
+                                <div *ngIf="password.errors?.['minlength']">Password must be at least 8 characters long.
+                                </div>
+                                <div *ngIf="password.errors?.['pattern']">Password must include at least one uppercase
+                                    letter, one lowercase letter, one number, and one special character.</div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Image input -->
+                        <div class="form-group">
+                            <label for="profileImage">Profile Image:</label>
+                            <input type="file" id="profileImage" class="form-control" name="profileImage" ngModel
+                                #profileImage="ngModel" (change)="onFileChange($event)">
+                            <div *ngIf="profileImage.invalid && profileImage.touched" class="error-message">
+                                <div *ngIf="profileImage.errors?.['required']">Profile image is required.</div>
+                            </div>
+                        </div>
+
+                        <!-- Gender input -->
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <select id="gender" class="form-control" name="gender" ngModel required #gender="ngModel">
+                                <option value="MALE">Male</option>
+                                <option value="FEMALE">Female</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+                            <div *ngIf="gender.invalid && gender.touched" class="error-message">
+                                <div *ngIf="gender.errors?.['required']">Gender is required.</div>
+                            </div>
+                        </div>
+
+                        <!-- Date of Birth input -->
+                        <div class="form-group">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" id="dob" class="form-control" name="dob" ngModel required #dob="ngModel">
+                            <div *ngIf="dob.invalid && dob.touched" class="error-message">
+                                <div *ngIf="dob.errors?.['required']">Date of birth is required.</div>
+                            </div>
+                        </div>
+
+                        <!-- Address input -->
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <textarea id="address" class="form-control" name="address" ngModel required
+                                #address="ngModel" placeholder="Enter your address" rows="4"></textarea>
+                            <div *ngIf="address.invalid && address.touched" class="error-message">
+                                <div *ngIf="address.errors?.['required']">Address is required.</div>
+                            </div>
+                        </div>
+
+
+                        <!-- Mobile number input -->
+                        <div class="form-group">
+                            <label for="mobileNo">Mobile Number:</label>
+                            <input type="tel" id="mobileNo" class="form-control" name="mobileNo" ngModel required
+                                pattern="^\d{10}$" #mobileNo="ngModel" placeholder="Enter your mobile number">
+                            <div *ngIf="mobileNo.invalid && mobileNo.touched" class="error-message">
+                                <div *ngIf="mobileNo.errors?.['required']">Mobile number is required.</div>
+                                <div *ngIf="mobileNo.errors?.['pattern']">Mobile number must be 10 digits.</div>
+                            </div>
+                        </div>
+
+                        <!-- Pin Code input -->
+                        <div class="form-group">
+                            <label for="pinCode">Pin Code:</label>
+                            <input type="text" id="pinCode" class="form-control" name="pinCode" ngModel required
+                                #pinCode="ngModel" placeholder="Enter your pin code">
+                            <div *ngIf="pinCode.invalid && pinCode.touched" class="error-message">
+                                <div *ngIf="pinCode.errors?.['required']">Pin code is required.</div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="register-button" [disabled]="registrationForm.invalid">Create
+                            Account</button>
+
+                        <div class="login-link">
+                            Already have an account? <a routerLink="/login">Log In</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

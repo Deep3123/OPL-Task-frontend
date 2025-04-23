@@ -1,0 +1,119 @@
+<!-- user-list.component.html -->
+<div class="user-list-container">
+    <div class="header-section">
+        <h1>User Management</h1>
+        <div class="stats-badge">
+            <span>Total Users: <strong>{{ totalUsers }}</strong></span>
+        </div>
+    </div>
+
+    <div class="control-panel">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" placeholder="Search by name, username or email..." [(ngModel)]="searchText"
+                (input)="onSearch()" class="search-box" />
+        </div>
+
+        <div class="page-size-selector">
+            <label for="recordsPerPage">Records per page:</label>
+            <select id="recordsPerPage" [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="records-select">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="loading-container" *ngIf="isLoading">
+        <div class="loading-spinner"></div>
+        <p>Loading users...</p>
+    </div>
+
+    <!-- User Table -->
+    <div class="table-container" *ngIf="!isLoading">
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <!-- <th>Gender</th> -->
+                    <th class="actions-column">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of filteredUsers">
+                    <td>
+                        <div class="user-name-cell">
+                            <div class="user-avatar" *ngIf="!user.profileImage">
+                                {{ getInitials(user.name) }}
+                            </div>
+                            <img *ngIf="user.profileImage" [src]="user.profileImage" alt="Profile"
+                                class="user-avatar-img">
+                            <span>{{ user.name }}</span>
+                        </div>
+                    </td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <span class="role-badge">{{ user.accessRole }}</span>
+                    </td>
+                    <td class="actions-cell">
+                        <button class="btn btn-view" (click)="viewUser(user)" title="View Details">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-edit" (click)="editUser(user)" title="Edit User">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-delete" (click)="deleteUser(user)" title="Delete User">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredUsers.length === 0">
+                    <td colspan="5" class="no-records">
+                        <i class="fas fa-search"></i>
+                        <p>No users found matching your criteria</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-section" *ngIf="totalPages > 0">
+        <div class="pagination-info">
+            Showing {{ currentPage * pageSize + 1 }} - {{ Math.min((currentPage + 1) * pageSize, totalUsers) }} of {{
+            totalUsers }} users
+        </div>
+        <div class="pagination-controls">
+            <button class="pagination-btn" (click)="onPageChange(0)" [disabled]="currentPage === 0" title="First Page">
+                <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button class="pagination-btn" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0"
+                title="Previous Page">
+                <i class="fas fa-angle-left"></i>
+            </button>
+
+            <div class="page-numbers">
+                <span *ngFor="let page of getVisiblePageNumbers()" [class.active]="page === currentPage + 1"
+                    (click)="page > 0 ? onPageChange(page - 1) : null" class="page-number" [class.ellipsis]="page < 0">
+                    {{ page > 0 ? page : '...' }}
+                </span>
+            </div>
+
+            <button class="pagination-btn" (click)="onPageChange(currentPage + 1)"
+                [disabled]="currentPage === totalPages - 1" title="Next Page">
+                <i class="fas fa-angle-right"></i>
+            </button>
+            <button class="pagination-btn" (click)="onPageChange(totalPages - 1)"
+                [disabled]="currentPage === totalPages - 1" title="Last Page">
+                <i class="fas fa-angle-double-right"></i>
+            </button>
+        </div>
+    </div>
+</div>

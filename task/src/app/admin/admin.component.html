@@ -1,0 +1,113 @@
+<!-- admin.component.html -->
+<div class="admin-layout">
+    <!-- Top Navigation Bar -->
+    <header class="top-navbar">
+        <div class="navbar-left">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>Admin Panel</span>
+            </div>
+
+            <nav class="main-nav">
+                <a routerLink="dashboard" routerLinkActive="active" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a routerLink="user-list" routerLinkActive="active" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>User Management</span>
+                </a>
+                <a href="#" class="nav-item" (click)="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+                <!-- <a routerLink="profile" routerLinkActive="active" class="nav-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span>My Profile</span>
+                </a>
+                <a routerLink="settings" routerLinkActive="active" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a> -->
+            </nav>
+        </div>
+
+        <!-- <div class="navbar-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+
+            <div class="notifications">
+                <button class="icon-button" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+            </div>
+
+            <div class="user-menu" (click)="toggleUserMenu()" clickOutside (clickOutside)="closeUserMenu()">
+                <div class="user-avatar">
+                    <span>{{getUserInitials()}}</span>
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Admin User</span>
+                    <span class="user-role">Administrator</span>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+
+                <div class="dropdown-menu" *ngIf="userMenuOpen">
+                    <a routerLink="/admin/profile">
+                        <i class="fas fa-user"></i> My Profile
+                    </a>
+                    <a routerLink="/admin/settings">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                    <div class="divider"></div>
+                    <a href="#" (click)="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div> -->
+    </header>
+
+    <!-- Mobile menu toggle and hamburger menu -->
+    <!-- <div class="mobile-menu-container">
+        <button class="mobile-toggle" (click)="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav class="mobile-nav" *ngIf="mobileMenuOpen">
+            <a routerLink="dashboard" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a routerLink="user-list" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>User Management</span>
+            </a>
+            <a routerLink="profile" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-user-circle"></i>
+                <span>My Profile</span>
+            </a>
+            <a routerLink="settings" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <div class="divider"></div>
+            <a href="#" (click)="logout()" class="nav-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div> -->
+
+    <!-- Page Content -->
+    <main class="main-content">
+        <!-- <div class="page-header">
+            <h1 class="page-title">Admin Dashboard</h1>
+        </div> -->
+        <div class="page-content">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>

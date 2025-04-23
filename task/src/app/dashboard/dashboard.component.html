@@ -1,0 +1,64 @@
+<!-- HTML Component -->
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <img *ngIf="user?.profileImage; else aliasTemplate" [src]="user.profileImage" alt="Profile Image" />
+            <ng-template #aliasTemplate>
+                <div class="avatar-placeholder">{{ getInitials(user?.name || user?.username) }}</div>
+            </ng-template>
+        </div>
+        <div class="profile-title">
+            <h1>{{ user?.name || 'Unknown User' }}</h1>
+            <span class="profile-username">{{ user?.username || 'username' }}</span>
+            <span class="profile-badge" *ngIf="user?.role">{{ user?.role }}</span>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <div class="profile-section">
+            <h2>Personal Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </div>
+                    <div class="info-value">{{ user?.email || 'Not provided' }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-phone"></i>
+                        <span>Contact</span>
+                    </div>
+                    <div class="info-value">{{ user?.contactNumber || 'Not provided' }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-birthday-cake"></i>
+                        <span>Date of Birth</span>
+                    </div>
+                    <div class="info-value">{{ user?.dob | date:'longDate' }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Address</span>
+                    </div>
+                    <div class="info-value address-value">
+                        <span>{{ user?.address || 'Not provided' }}</span>
+                        <span *ngIf="user?.pinCode">PIN: {{ user?.pinCode }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <button class="btn btn-primary">
+                <i class="fas fa-edit"></i> Edit Profile
+            </button>
+            <button class="btn btn-secondary">
+                <i class="fas fa-key"></i> Change Password
+            </button>
+        </div>
+    </div>
+</div>
