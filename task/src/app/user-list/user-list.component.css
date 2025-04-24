@@ -53,6 +53,7 @@
   position: relative;
   flex: 1;
   max-width: 400px;
+  display: flex;
 }
 
 .search-icon {
@@ -61,13 +62,14 @@
   top: 50%;
   transform: translateY(-50%);
   color: #a0aec0;
+  z-index: 1;
 }
 
 .search-box {
-  width: 100%;
+  flex: 1;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
   border: 1px solid #e2e8f0;
-  border-radius: 6px;
+  border-radius: 6px 0 0 6px;
   font-size: 0.95rem;
   transition: all 0.2s ease;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -77,6 +79,40 @@
   border-color: #4299e1;
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
   outline: none;
+}
+
+.reset-btn {
+  background-color: #e2e8f0;
+  color: #4a5568;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+
+.reset-btn:hover {
+  background-color: #cbd5e0;
+}
+
+/* Update search-btn to have proper radius when reset button is present */
+.search-btn {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.search-btn:hover {
+  background-color: #303f9f;
 }
 
 .page-size-selector {
@@ -183,6 +219,8 @@
 .actions-column {
   text-align: center;
   width: 140px;
+  /* margin: 10px;
+  padding-top: 10px; */
 }
 
 .user-name-cell {

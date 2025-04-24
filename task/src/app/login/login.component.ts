@@ -25,7 +25,7 @@ export class LoginComponent {
   captchaInput: string = '';
   captchaUrl: string = '';
   isLoading: boolean = false;
-  showPassword: boolean = false;
+  showPassword: boolean = true;
 
   ngOnInit() {
     this.loadCaptcha();

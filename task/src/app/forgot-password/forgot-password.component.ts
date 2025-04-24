@@ -15,6 +15,8 @@ import { ForgotPasswordRequest } from '../dtoClasses/forgot-password-request';
 export class ForgotPasswordComponent implements OnInit {
   isLoading: boolean = false;
   captchaUrl: string = ''; // Will hold the CAPTCHA image URL
+  emailSent: boolean = false; // Track if email has been sent successfully
+  userEmail: string = ''; // Store the email to display in success message
 
   constructor(
     private router: Router,
@@ -60,6 +62,9 @@ export class ForgotPasswordComponent implements OnInit {
       forgotPasswordRequest.captchaResponse =
         forgotPasswordForm.value.captchaInput;
 
+      // Store email for success message
+      this.userEmail = forgotPasswordForm.value.email;
+
       this.isLoading = true;
       console.log('Loading started...');
 
@@ -68,14 +73,15 @@ export class ForgotPasswordComponent implements OnInit {
           this.isLoading = false;
           console.log('Loading finished');
 
+          // Set emailSent to true to show success view
+          this.emailSent = true;
+
+          // Show success popup
           Swal.fire({
             icon: 'success',
             title: 'Email Sent Successfully!',
             text: response.message,
             confirmButtonText: 'OK',
-          }).then(() => {
-            forgotPasswordForm.reset();
-            this.reloadCaptcha(); // Reset captcha after successful submission
           });
         },
         (error) => {
@@ -103,5 +109,10 @@ export class ForgotPasswordComponent implements OnInit {
         confirmButtonText: 'OK',
       });
     }
+  }
+
+  // Go back to login page
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }

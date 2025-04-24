@@ -43,27 +43,30 @@ export class AdminComponent {
   }
 
   logout() {
-    Swal.fire({
-      title: 'Logout',
-      text: 'Are you sure you want to log out?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Logout',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: '#ef4444',
-      cancelButtonColor: '#64748b',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.clear(); // or removeItem('token'), etc.
-        Swal.fire({
-          title: 'Logged Out',
-          text: 'You have been logged out successfully.',
-          icon: 'success',
-          confirmButtonColor: '#4361ee',
-        }).then(() => {
-          this.router.navigate(['/login']);
-        });
-      }
-    });
+    localStorage.clear();
+    this.router.navigate(['/login']);
+
+    // Swal.fire({
+    //   title: 'Logout',
+    //   text: 'Are you sure you want to log out?',
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Yes, Logout',
+    //   cancelButtonText: 'Cancel',
+    //   confirmButtonColor: '#ef4444',
+    //   cancelButtonColor: '#64748b',
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     localStorage.clear(); // or removeItem('token'), etc.
+    //     Swal.fire({
+    //       title: 'Logged Out',
+    //       text: 'You have been logged out successfully.',
+    //       icon: 'success',
+    //       confirmButtonColor: '#4361ee',
+    //     }).then(() => {
+    //       this.router.navigate(['/login']);
+    //     });
+    //   }
+    // });
   }
 }

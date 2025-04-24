@@ -62,7 +62,7 @@ export class RegisterComponent {
           Swal.fire({
             title: 'Registration Successful',
             icon: 'success',
-            text: 'Welcome to JetWayz!',
+            text: data.message,
             confirmButtonText: 'OK',
           }).then((result) => {
             if (result.isConfirmed) {

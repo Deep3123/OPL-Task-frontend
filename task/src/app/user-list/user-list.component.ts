@@ -70,7 +70,7 @@ export class UserListComponent implements OnInit {
       })
       .subscribe({
         next: (res) => {
-          console.log(res.content)
+          console.log(res.content);
           this.users = res.content;
           this.totalUsers = res.totalElements;
           this.totalPages = res.totalPages;
@@ -85,7 +85,7 @@ export class UserListComponent implements OnInit {
       });
   }
 
-  // Search filter
+  // Local search filter - searches only in the current page
   onSearch(): void {
     const term = this.searchText.trim().toLowerCase();
     if (term) {
@@ -100,17 +100,86 @@ export class UserListComponent implements OnInit {
     }
   }
 
+  // Global search - searches across all users in the database
+  performGlobalSearch(): void {
+    if (!this.searchText || this.searchText.trim() === '') {
+      // If search text is empty, load normal paginated data
+      this.loadUsers();
+      return;
+    }
+
+    this.isLoading = true;
+
+    // Reset to first page when performing a new search
+    this.currentPage = 0;
+
+    const params = new HttpParams()
+      .set('searchTerm', this.searchText.trim())
+      .set('page', this.currentPage.toString())
+      .set('size', this.pageSize.toString());
+
+    this.http
+      .get<ApiResponse>('http://localhost:8080/search-users', { params })
+      .subscribe({
+        next: (res) => {
+          this.users = res.content;
+          this.totalUsers = res.totalElements;
+          this.totalPages = res.totalPages;
+          this.filteredUsers = this.users;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+          Swal.fire('Error!', err.error.message, 'error');
+          console.error('Error searching users:', err);
+        },
+      });
+  }
+
   // Page change handler
   onPageChange(page: number): void {
     if (page < 0 || page >= this.totalPages) return;
     this.currentPage = page;
-    this.loadUsers();
+
+    // If we're in a search context, use search endpoint
+    if (this.searchText && this.searchText.trim() !== '') {
+      const params = new HttpParams()
+        .set('searchTerm', this.searchText.trim())
+        .set('page', this.currentPage.toString())
+        .set('size', this.pageSize.toString());
+
+      this.isLoading = true;
+
+      this.http
+        .get<ApiResponse>('http://localhost:8080/search-users', { params })
+        .subscribe({
+          next: (res) => {
+            this.users = res.content;
+            this.totalUsers = res.totalElements;
+            this.totalPages = res.totalPages;
+            this.filteredUsers = this.users;
+            this.isLoading = false;
+          },
+          error: (err) => {
+            this.isLoading = false;
+            Swal.fire('Error!', 'Failed to search users.', 'error');
+            console.error('Error searching users:', err);
+          },
+        });
+    } else {
+      this.loadUsers(); // Standard pagination if not searching
+    }
   }
 
   // Page size change handler
   onPageSizeChange(): void {
     this.currentPage = 0; // Reset to first page when changing page size
-    this.loadUsers();
+
+    if (this.searchText && this.searchText.trim() !== '') {
+      this.performGlobalSearch();
+    } else {
+      this.loadUsers();
+    }
   }
 
   // Get initials from name for avatar
@@ -213,14 +282,7 @@ export class UserListComponent implements OnInit {
               <span class="info-label">Status:</span>
               <span class="info-value">${user.status || 'Active'}</span>
             </div>
-            <div class="user-info-row">
-              <span class="info-label">Created On:</span>
-              <span class="info-value">${
-                user.createdAt
-                  ? new Date(user.createdAt).toLocaleDateString()
-                  : 'N/A'
-              }</span>
-            </div>
+            
           </div>
         </div>
       `,
@@ -278,16 +340,6 @@ export class UserListComponent implements OnInit {
     document.head.appendChild(style);
   }
 
-  // editUser(user: User): void {
-  //   Swal.fire({
-  //     title: 'Edit User',
-  //     text: `Edit functionality for ${user.name} is under construction!`,
-  //     icon: 'info',
-  //     confirmButtonText: 'Okay',
-  //     confirmButtonColor: '#3f51b5',
-  //   });
-  // }
-
   editUser(user: any): void {
     const dialogRef = this.dialog.open(EditUserDialogComponent, {
       width: '600px', // Adjust dialog width as needed
@@ -339,5 +391,17 @@ export class UserListComponent implements OnInit {
         });
       }
     });
+  }
+
+  // Add this method to the UserListComponent class
+  resetSearch(): void {
+    // Clear the search text
+    this.searchText = '';
+
+    // Reset to first page
+    this.currentPage = 0;
+
+    // Reload users
+    this.loadUsers();
   }
 }
