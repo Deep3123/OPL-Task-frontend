@@ -404,4 +404,63 @@ export class UserListComponent implements OnInit {
     // Reload users
     this.loadUsers();
   }
+
+  downloadExcel(): void {
+    this.isLoading = true;
+
+    Swal.fire({
+      title: 'Downloading...',
+      text: 'Preparing your Excel file',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    // Create URL with any current filters applied
+    let url = 'http://localhost:8080/export-users-excel';
+
+    // If there's a search term, include it
+    if (this.searchText && this.searchText.trim() !== '') {
+      url += '?searchTerm=' + encodeURIComponent(this.searchText.trim());
+    }
+
+    // Use HttpClient to request the file
+    this.http.get(url, { responseType: 'blob' }).subscribe({
+      next: (response: Blob) => {
+        this.isLoading = false;
+
+        // Create a blob URL and trigger download
+        const blobUrl = window.URL.createObjectURL(response);
+        const link = document.createElement('a');
+
+        // Get current date for filename
+        const date = new Date();
+        const dateStr = date.toISOString().split('T')[0];
+
+        link.href = blobUrl;
+        link.download = `users_export_${dateStr}.xlsx`;
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);
+
+        Swal.close();
+        Swal.fire({
+          icon: 'success',
+          title: 'Excel Generated',
+          text: 'Your file has been downloaded successfully!',
+          timer: 2000,
+        });
+      },
+      error: (err) => {
+        this.isLoading = false;
+        Swal.close();
+        Swal.fire('Error!', 'Failed to generate Excel file.', 'error');
+        console.error('Error generating Excel:', err);
+      },
+    });
+  }
 }

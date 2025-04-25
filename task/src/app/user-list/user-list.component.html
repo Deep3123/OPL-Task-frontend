@@ -8,30 +8,30 @@
     </div>
 
     <div class="control-panel">
-        <!-- <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" placeholder="Search by name, username or email..." [(ngModel)]="searchText"
-                (input)="onSearch()" class="search-box" />
-        </div> -->
-
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" placeholder="Search..." [(ngModel)]="searchText"
-                class="search-box" />
+            <input type="text" placeholder="Search..." [(ngModel)]="searchText" class="search-box" />
             <button class="search-btn" (click)="performGlobalSearch()">Search</button>
             <button class="reset-btn" (click)="resetSearch()">Reset</button>
         </div>
 
-        <div class="page-size-selector">
-            <label for="recordsPerPage">Records per page:</label>
-            <select id="recordsPerPage" [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="records-select">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
+        <div class="actions-container">
+
+
+            <div class="page-size-selector">
+                <label for="recordsPerPage">Records per page:</label>
+                <select id="recordsPerPage" [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="records-select">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <button class="download-btn" (click)="downloadExcel()" title="Download Excel">
+                <i class="fas fa-download"></i> Export to Excel
+            </button>
         </div>
     </div>
 
